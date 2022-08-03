@@ -6,5 +6,5 @@ const userSchema = new mongoose.Schema({
     phone: Number,
     role:String
 })
-mongoose.model('users',userSchema);
-module.exports = mongoose.model('users');
+mongoose.model('Users',userSchema);
+module.exports = mongoose.model('Users');
