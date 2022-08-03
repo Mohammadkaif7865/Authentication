@@ -30,4 +30,29 @@ router.post('/register', (req, res) => {
     })
 
 })
+router.post('/login', (req, res) => {
+    User.findOne({ email: req.body.email }, (err, user) => {
+        if (err) return res.send({ auth: false, token: "Error while connection" });
+        if (!user) return res.send({ auth: false, token: "No user is found Register first" });
+        else {
+            const passIsValid = bcrypt.compareSync(req.body.password, user.password);
+            if (!passIsValid)
+                return res.send({ auth: false, token: "Invalid password" });
+            // password correct 
+            let token = jwt.sign({ id: user._id }, config.secret, { expiresIn: 86400 })// 24 hours
+            return res.send({ auth: true, token: token });
+        }
+    })
+})
+router.get('/getInfo', (req, res) => {
+    let token = req.header("x-access-token");
+    if(!token) res.send({auth: false, token: "No token is found" });
+    // JWT verifying
+    jwt.verify(token, config.secret, (err, user) => {
+        if(err) return res.send({auth: false, token:"invalid token"})
+        User.findById(user.id, (err, result) => {
+            res.send(result);
+        })
+    })
+})
 module.exports = router;
