@@ -1,7 +1,9 @@
 const express = require('express');
 const app = express();
 const db = require('./db');
-const port = 4000;
+let dotenv = require("dotenv");
+dotenv.config();
+let port = process.env.PORT || 9870;
 const cors = require('cors');
 app.use(cors());
 const AuthController = require('./controller/authController');
