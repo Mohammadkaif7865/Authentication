@@ -1,12 +1,12 @@
 const express = require('express');
 const router = express();
 const bodyParser = require('body-parser');
-const jwt = require('jsonwebtoken');
-const bcrypt = require('bcryptjs');
-const config = require('../config');
-const User = require('../model/userModel');
+const jwt = require('jsonwebtoken');// # to generate the token
+const bcrypt = require('bcryptjs');// # to encrypt the data
+const config = require('../config');// # to secret token
+const User = require('../model/userModel');// # defined schema for users
 router.use(bodyParser.urlencoded({ extended: true }));
-router.use(bodyParser.json());
+router.use(bodyParser.json());// # cors
 // get all users from collection
 router.get('/users', (req, res) => {
     User.find({}, (err, user) => {
