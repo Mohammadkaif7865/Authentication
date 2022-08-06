@@ -16,17 +16,17 @@ router.get('/users', (req, res) => {
 })
 router.post('/register', (req, res) => {
     // password encryption
+
     let encryptedPassword = bcrypt.hashSync(req.body.password, 8);
     User.create({
         name: req.body.name,
         email: req.body.email,
         password: encryptedPassword,
         phone: req.body.phone,
-        role: req.body.role ? req.body.role : 'user'
+        role: req.body.role ? req.body.role : 'User'
     }, (err, data) => {
-        if (err) return res.status(500).send("Error while register");
-        res.status(200).send("Registered successfully!!")
-
+        if (err) return res.status(500).send('Error While Register');
+        res.status(200).send('Registeration Succesful')
     })
 
 })
@@ -46,10 +46,10 @@ router.post('/login', (req, res) => {
 })
 router.get('/getInfo', (req, res) => {
     let token = req.header("x-access-token");
-    if(!token) res.send({auth: false, token: "No token is found" });
+    if (!token) res.send({ auth: false, token: "No token is found" });
     // JWT verifying
     jwt.verify(token, config.secret, (err, user) => {
-        if(err) return res.send({auth: false, token:"invalid token"})
+        if (err) return res.send({ auth: false, token: "invalid token" })
         User.findById(user.id, (err, result) => {
             res.send(result);
         })
