@@ -7,7 +7,7 @@ const config = require('../config');// # to secret token
 const User = require('../model/userModel');// # defined schema for users
 router.use(bodyParser.urlencoded({ extended: true }));
 router.use(bodyParser.json());// # cors
-// get all users from collection
+// get all users from collections
 router.get('/users', (req, res) => {
     User.find({}, (err, user) => {
         if (err) throw err;
